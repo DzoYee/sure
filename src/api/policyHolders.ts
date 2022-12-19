@@ -4,20 +4,18 @@ interface PolicyHolderResponse {
   policyHolders: IPolicyHolder[]
 }
 
-interface IObjectKeys {
-  [key: string]: any;
+export interface IPolicyHolderAddress {
+  line1: string,
+  line2: string | undefined,
+  city: string,
+  state: string,
+  postalCode: string,
 }
 
-export interface IPolicyHolder extends IObjectKeys {
+export interface IPolicyHolder {
   name: string,
   age: number,
-  address: {
-    line1: string,
-    line2: string | undefined,
-    city: string,
-    state: string,
-    postalCode: string,
-  },
+  address: IPolicyHolderAddress,
   phoneNumber: string,
   isPrimary: boolean,
 }

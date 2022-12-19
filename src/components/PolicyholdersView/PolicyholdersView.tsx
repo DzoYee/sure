@@ -3,25 +3,24 @@ import InfoTable from "../InfoTable";
 import { IPolicyHolder, usePolicyHolders } from "../../api/policyHolders";
 import { TInfoTableRow } from "../InfoTable/InfoTable";
 
+const policyHolderToRows = (policyHolder: IPolicyHolder): TInfoTableRow[] => {
+  return Object.keys(policyHolder).map((key) => {
+    return {
+      key: key.charAt(0).toUpperCase() + key.slice(1),
+      value: policyHolder[key as keyof IPolicyHolder].toString()
+    }
+  })
+}
+
 function PolicyholdersView() {
   const policyHolderQuery = usePolicyHolders()
-
   let rows: TInfoTableRow[] = []
-  const policyHolderToRows = (policyHolder: IPolicyHolder): TInfoTableRow[] => {
-    const rows = []
-    for (const key in policyHolder) {
-      rows.push({
-        key: key.charAt(0).toUpperCase() + key.slice(1),
-        value: policyHolder[key].toString()
-      })
-    }
-    return rows
-  }
+
 
   if (policyHolderQuery.isSuccess) {
-    for (const policyHolder of policyHolderQuery.data.policyHolders) {
-      rows = policyHolderToRows(policyHolder)
-    }
+    rows = policyHolderQuery.data.policyHolders.reduce((acc: TInfoTableRow[], policyHolder: IPolicyHolder) => {
+      return [...acc , ...policyHolderToRows(policyHolder)]
+    }, [])
   }
 
   return (
