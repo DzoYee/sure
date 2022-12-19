@@ -10,9 +10,14 @@ import {
   Box,
 } from '@mui/material';
 
+export type TInfoTableRow = {
+  key: string;
+  value: string | number
+}
+
 type TInfoTable = {
   header: string;
-  rows: { key: string; value: string | number }[];
+  rows: TInfoTableRow[];
 } & BoxProps;
 
 function InfoTable({ header, rows, ...boxProps }: TInfoTable) {
