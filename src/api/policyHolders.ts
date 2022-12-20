@@ -1,4 +1,6 @@
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
+
+const policyHoldersPath = 'https://fe-interview-technical-challenge-api-git-main-sure.vercel.app/api/policyholders'
 
 interface PolicyHolderResponse {
   policyHolders: IPolicyHolder[]
@@ -21,10 +23,25 @@ export interface IPolicyHolder {
 }
 
 const fetchPolicyHolder = async (): Promise<PolicyHolderResponse> => {
-  const res = await fetch('https://fe-interview-technical-challenge-api-git-main-sure.vercel.app/api/policyholders')
+  const res = await fetch(policyHoldersPath)
+  return res.json()
+}
+
+const addPolicyHolder = async (policyHolder: IPolicyHolder): Promise<PolicyHolderResponse> => {
+  const res = await fetch(policyHoldersPath, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(policyHolder)
+  })
   return res.json()
 }
 
 export function usePolicyHolders() {
   return useQuery(['policyholder'], fetchPolicyHolder)
+}
+
+export function useAddPolicyHolders() {
+  return useMutation(addPolicyHolder)
 }

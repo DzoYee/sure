@@ -1,6 +1,6 @@
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import InfoTable from "../InfoTable";
-import { IPolicyHolder, usePolicyHolders } from "../../api/policyHolders";
+import { IPolicyHolder, useAddPolicyHolders, usePolicyHolders } from "../../api/policyHolders";
 import { TInfoTableRow } from "../InfoTable/InfoTable";
 
 const policyHolderToRows = (policyHolder: IPolicyHolder): TInfoTableRow[] => {
@@ -14,6 +14,7 @@ const policyHolderToRows = (policyHolder: IPolicyHolder): TInfoTableRow[] => {
 
 function PolicyholdersView() {
   const policyHolderQuery = usePolicyHolders()
+  const addPolicyHolderQuery = useAddPolicyHolders()
   let rows: TInfoTableRow[] = []
 
 
@@ -26,6 +27,33 @@ function PolicyholdersView() {
   return (
       <Box sx={{ textAlign: 'center' }}>
         <InfoTable header="Test Table" rows={rows} />
+        <Box
+          sx={{
+            paddingTop: '16px',
+            textAlign: 'center',
+          }}
+        >
+          <Button
+            onClick={() => addPolicyHolderQuery.mutate({
+              name: 'John Doe',
+              age: 30,
+              address: {
+                line1: '555 Five Street',
+                line2: undefined,
+                city: 'Los Five',
+                state: 'CA',
+                postalCode: '91210'
+              },
+              phoneNumber: '555-555-5555',
+              isPrimary: false
+            })}
+            variant="contained"
+            color="primary"
+            size="large"
+          >
+            Add a policyholder
+          </Button>
+        </Box>
       </Box>
     )
 }
