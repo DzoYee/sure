@@ -3,13 +3,16 @@ import InfoTable from "../InfoTable";
 import { IPolicyHolder, useAddPolicyHolders, usePolicyHolders } from "../../api/policyHolders";
 import { TInfoTableRow } from "../InfoTable/InfoTable";
 
-const policyHolderToRows = (policyHolder: IPolicyHolder): TInfoTableRow[] => {
-  return Object.keys(policyHolder).map((key) => {
-    return {
-      key: key.charAt(0).toUpperCase() + key.slice(1),
-      value: policyHolder[key as keyof IPolicyHolder].toString()
-    }
-  })
+const policyHolderToDisplayRows = (policyHolder: IPolicyHolder): TInfoTableRow[] => {
+  const keyValuePairs : TInfoTableRow[] = []
+
+  keyValuePairs.push({ key: 'Name', value: policyHolder.name})
+  keyValuePairs.push({ key: 'Age', value: policyHolder.age})
+  keyValuePairs.push({ key: 'Address', value: policyHolder.age})
+  keyValuePairs.push({ key: 'Phone Number', value: policyHolder.phoneNumber})
+  keyValuePairs.push({ key: 'Primary Policy Holder', value: policyHolder.isPrimary ? 'Yes': 'No'})
+
+  return keyValuePairs
 }
 
 function PolicyholdersView() {
@@ -17,10 +20,9 @@ function PolicyholdersView() {
   const addPolicyHolderMutation = useAddPolicyHolders()
   let policyHolders: TInfoTableRow[][] = []
 
-
   if (policyHolderQuery.isSuccess) {
     policyHolders = policyHolderQuery.data.policyHolders.map((policyHolder: IPolicyHolder) => {
-      return policyHolderToRows(policyHolder)
+      return policyHolderToDisplayRows(policyHolder)
     })
   }
 
