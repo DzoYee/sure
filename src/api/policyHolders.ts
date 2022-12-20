@@ -1,6 +1,7 @@
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 
 const policyHoldersPath = 'https://fe-interview-technical-challenge-api-git-main-sure.vercel.app/api/policyholders'
+const queryKey = ['policyholder']
 
 interface PolicyHolderResponse {
   policyHolders: IPolicyHolder[]
@@ -39,9 +40,16 @@ const addPolicyHolder = async (policyHolder: IPolicyHolder): Promise<PolicyHolde
 }
 
 export function usePolicyHolders() {
-  return useQuery(['policyholder'], fetchPolicyHolder)
+  return useQuery(queryKey, fetchPolicyHolder)
 }
 
 export function useAddPolicyHolders() {
-  return useMutation(addPolicyHolder)
+  const queryClient = useQueryClient()
+  return useMutation(addPolicyHolder, {
+    onSuccess: (data) => {
+      queryClient.setQueryData(queryKey, () => {
+        return data
+      })
+    }
+  })
 }

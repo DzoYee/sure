@@ -1,4 +1,4 @@
-import { Box, Button } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import InfoTable from "../InfoTable";
 import { IPolicyHolder, useAddPolicyHolders, usePolicyHolders } from "../../api/policyHolders";
 import { TInfoTableRow } from "../InfoTable/InfoTable";
@@ -14,19 +14,24 @@ const policyHolderToRows = (policyHolder: IPolicyHolder): TInfoTableRow[] => {
 
 function PolicyholdersView() {
   const policyHolderQuery = usePolicyHolders()
-  const addPolicyHolderQuery = useAddPolicyHolders()
-  let rows: TInfoTableRow[] = []
+  const addPolicyHolderMutation = useAddPolicyHolders()
+  let policyHolders: TInfoTableRow[][] = []
 
 
   if (policyHolderQuery.isSuccess) {
-    rows = policyHolderQuery.data.policyHolders.reduce((acc: TInfoTableRow[], policyHolder: IPolicyHolder) => {
-      return [...acc , ...policyHolderToRows(policyHolder)]
-    }, [])
+    policyHolders = policyHolderQuery.data.policyHolders.map((policyHolder: IPolicyHolder) => {
+      return policyHolderToRows(policyHolder)
+    })
   }
 
   return (
       <Box sx={{ textAlign: 'center' }}>
-        <InfoTable header="Test Table" rows={rows} />
+        <Typography variant="h5" textAlign="left" marginBottom="16px">
+          Policy Holders
+        </Typography>
+        {policyHolders.map((policyHolder) => (
+          <InfoTable header={undefined} rows={policyHolder} />
+        ))}
         <Box
           sx={{
             paddingTop: '16px',
@@ -34,7 +39,7 @@ function PolicyholdersView() {
           }}
         >
           <Button
-            onClick={() => addPolicyHolderQuery.mutate({
+            onClick={() => addPolicyHolderMutation.mutate({
               name: 'John Doe',
               age: 30,
               address: {

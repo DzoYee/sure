@@ -16,7 +16,7 @@ export type TInfoTableRow = {
 }
 
 type TInfoTable = {
-  header: string;
+  header: string | undefined;
   rows: TInfoTableRow[];
 } & BoxProps;
 
