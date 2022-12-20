@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
 
-const policyHoldersPath = 'https://fe-interview-technical-challenge-api-git-main-sure.vercel.app/api/policyholders'
+export const policyHoldersPath = 'https://fe-interview-technical-challenge-api-git-main-sure.vercel.app/api/policyholders'
 const queryKey = ['policyholder']
 
 interface PolicyHolderResponse {

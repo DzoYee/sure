@@ -8,7 +8,10 @@ const policyHolderToDisplayRows = (policyHolder: IPolicyHolder): TInfoTableRow[]
 
   keyValuePairs.push({ key: 'Name', value: policyHolder.name})
   keyValuePairs.push({ key: 'Age', value: policyHolder.age})
-  keyValuePairs.push({ key: 'Address', value: policyHolder.age})
+  keyValuePairs.push({
+    key: 'Address',
+    value: `${policyHolder.address.line1}${policyHolder.address.line2 ? ' ' + policyHolder.address.line2: ''}, ${policyHolder.address.city}, ${policyHolder.address.state} ${policyHolder.address.postalCode}`
+  })
   keyValuePairs.push({ key: 'Phone Number', value: policyHolder.phoneNumber})
   keyValuePairs.push({ key: 'Primary Policy Holder', value: policyHolder.isPrimary ? 'Yes': 'No'})
 
@@ -45,13 +48,13 @@ function PolicyholdersView() {
               name: 'John Doe',
               age: 30,
               address: {
-                line1: '555 Five Street',
+                line1: '55555 Five Street',
                 line2: undefined,
-                city: 'Los Five',
+                city: 'Los Fiveland',
                 state: 'CA',
                 postalCode: '91210'
               },
-              phoneNumber: '555-555-5555',
+              phoneNumber: '1-555-555-5555',
               isPrimary: false
             })}
             variant="contained"
