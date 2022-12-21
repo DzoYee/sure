@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, List, ListItemText, Typography } from "@mui/material";
 import InfoTable from "../InfoTable";
 import { IPolicyHolder, useAddPolicyHolders, usePolicyHolders } from "../../api/policyHolders";
 import { TInfoTableRow } from "../InfoTable/InfoTable";
@@ -34,8 +34,8 @@ function PolicyholdersView() {
         <Typography variant="h5" textAlign="left" marginBottom="16px">
           Policy Holders
         </Typography>
-        {policyHolders.map((policyHolder) => (
-          <InfoTable rows={policyHolder} />
+        {policyHolders.map((policyHolder,index) => (
+          <InfoTable key={index} rows={policyHolder} />
         ))}
         <Box
           sx={{
@@ -63,15 +63,16 @@ function PolicyholdersView() {
           >
             Add a policyholder
           </Button>
-          <Typography variant="body1" textAlign="left" marginBottom="16px">
-            - Add cases to handle the sad path states for policy holder queries. What happens with empty, loading, failing states?
-            - Add testing for api layer
-            - Add testing coverage for interactive paths (component/cypress unit/integration)
-            - Fix policy holders get and post to invalidate get cache instead of populating get cache with post response
-            - Make the application responsive
-            - Handle CI/CD pipeline with testing and staging environments
-            - Potentially redesign the core functions handling the translation of backend models to frontend models
-          </Typography>
+          <List sx={{ textAlign: 'left' }}>
+            <ListItemText primary='- Add cases to handle the sad path states for policy holder queries. What happens with empty, loading, failing states?'/>
+            <ListItemText primary='- Add testing for api layer'/>
+            <ListItemText primary='- Add testing coverage for interactive paths (component/cypress unit/integration)'/>
+            <ListItemText primary='- Fix policy holders get and post to invalidate get cache instead of populating get cache with post response'/>
+            <ListItemText primary='- Make the application responsive for different devices'/>
+            <ListItemText primary='- Create/Configure CI/CD pipeline with testing and staging environments'/>
+            <ListItemText primary='- Provide a truly unique ID for mapped values in PolicyHolderView'/>
+            <ListItemText primary='- Potentially redesign the core functions handling the translation of backend models to frontend models'/>
+          </List>
         </Box>
       </Box>
     )
