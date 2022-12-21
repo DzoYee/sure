@@ -16,7 +16,7 @@ export type TInfoTableRow = {
 }
 
 type TInfoTable = {
-  header: string | undefined;
+  header?: string;
   rows: TInfoTableRow[];
 } & BoxProps;
 
@@ -27,7 +27,7 @@ function InfoTable({ header, rows, ...boxProps }: TInfoTable) {
         {header}
       </Typography>
       <TableContainer component={Paper}>
-        <MuiTable sx={{ minWidth: { sm: 650 } }} aria-label="table">
+        <MuiTable sx={{ minWidth: { sm: 650 }, tableLayout:"fixed" }} aria-label="table">
           <TableBody>
             {rows.map(({ key, value }) => (
               <TableRow key={key}>
