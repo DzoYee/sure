@@ -10,9 +10,14 @@ import {
   Box,
 } from '@mui/material';
 
+export type TInfoTableRow = {
+  key: string;
+  value: string | number
+}
+
 type TInfoTable = {
-  header: string;
-  rows: { key: string; value: string | number }[];
+  header?: string;
+  rows: TInfoTableRow[];
 } & BoxProps;
 
 function InfoTable({ header, rows, ...boxProps }: TInfoTable) {
@@ -22,7 +27,7 @@ function InfoTable({ header, rows, ...boxProps }: TInfoTable) {
         {header}
       </Typography>
       <TableContainer component={Paper}>
-        <MuiTable sx={{ minWidth: { sm: 650 } }} aria-label="table">
+        <MuiTable sx={{ minWidth: { sm: 650 }, tableLayout:"fixed" }} aria-label="table">
           <TableBody>
             {rows.map(({ key, value }) => (
               <TableRow key={key}>

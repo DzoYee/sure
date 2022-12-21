@@ -19,5 +19,11 @@ describe('NavBar', () => {
   });
 
   // TODO: Challenge 2
-  it('should render an `href` attribute for each link', () => {});
+  it('should render an `href` attribute for each link', () => {
+    const { getByRole } = renderWithProviders(<NavBar {...defaultProps} />);
+
+    expect(getByRole('link', {name: 'Link1'})).toHaveAttribute('href', '/link1');
+    expect(getByRole('link', {name: 'Link2'})).toHaveAttribute('href', '/link2');
+    expect(getByRole('link', {name: 'Link3'})).toHaveAttribute('href', '/link3');
+  });
 });

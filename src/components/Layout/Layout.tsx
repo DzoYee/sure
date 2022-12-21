@@ -15,22 +15,31 @@ function Layout({ children, onFooterClick }: TLayout) {
       <Box
         component="main"
         sx={{
-          display: 'flex',
+          minHeight: '100vh',
+          display: 'grid',
+          gridTemplateRows: '1fr auto',
+
         }}
       >
-        <NavBar links={links} />
         <Box
           sx={{
-            margin: '0 auto',
-            maxWidth: '750px',
-            padding: '48px 16px',
+            display: 'flex'
           }}
         >
-          {children}
-          <InstructionsBar onClick={onFooterClick} />
+          <NavBar links={links} />
+          <Box
+            sx={{
+              margin: '0 auto',
+              maxWidth: '750px',
+              padding: '48px 16px',
+            }}
+          >
+            {children}
+            <InstructionsBar onClick={onFooterClick} />
+          </Box>
         </Box>
+        <Footer />
       </Box>
-      <Footer />
     </>
   );
 }
